@@ -77,10 +77,19 @@ type Commitment {
   note: String
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AccountingScope!]
+  inScopeOf: [AnyType!]
 
   "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this commitment."
   agreedIn: URI
+
+  "This commitment is part of the exchange agreement."
+  clauseOf: Agreement
+
+  "The place where a commitment occurs. Usually mappable."
+  atLocation: SpatialThing
+
+  "Represents a desired deliverable expected from this plan."
+  independentDemandOf: Plan
 
   ##############################################################################
   # inverse relationships and queries
@@ -161,18 +170,22 @@ type Intent {
   note: String
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AccountingScope!]
+  inScopeOf: [AnyType!]
 
   "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this intent."
   agreedIn: URI
 
+  "The place where an intent would occur. Usually mappable."
+  atLocation: SpatialThing
+
   ##############################################################################
   # inverse relationships and queries
 
+  satisfiedBy: [Satisfaction!]
+  publishedIn: [ProposedIntent!]
+
   "The intent can be safely deleted, has no dependent information."
   deletable: Boolean
-
-  satisfiedBy: [Satisfaction!]
 }
 
 """
@@ -277,7 +290,7 @@ input IntentCreateParams {
   note: String
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [ID!]
+  inScopeOf: [AnyType!]
 
   "(`SpatialThing`) The place where an intent occurs. Usually mappable."
   atLocation: ID
@@ -350,7 +363,7 @@ input IntentUpdateParams {
   note: String
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [ID!]
+  inScopeOf: [AnyType!]
 
   "(`SpatialThing`) The place where an intent occurs. Usually mappable."
   atLocation: ID
@@ -415,7 +428,7 @@ input CommitmentCreateParams {
   note: String
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [ID!]
+  inScopeOf: [AnyType!]
 
   "(`Plan`) Represents a desired deliverable expected from this plan."
   independentDemandOf: ID
@@ -479,7 +492,7 @@ input CommitmentUpdateParams {
   note: String
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [ID!]
+  inScopeOf: [AnyType!]
 
   "(`Plan`) Represents a desired deliverable expected from this plan."
   independentDemandOf: ID
@@ -584,34 +597,34 @@ type SatisfactionResponse {
 
 
 
-type Query {
+type PlanningQuery {
   commitment(id: ID): Commitment
-  commitments(start: ID, limit: Int): [Commitment!]
+  allCommitments(start: ID, limit: Int): [Commitment!]
 
   intent(id: ID): Intent
-  intents(start: ID, limit: Int): [Intent!]
+  allIntents(start: ID, limit: Int): [Intent!]
 
   fulfillment(id: ID): Fulfillment
-  fulfillments(start: ID, limit: Int): [Fulfillment!]
+  allFulfillments(start: ID, limit: Int): [Fulfillment!]
 
   satisfaction(id: ID): Satisfaction
-  satisfactions(start: ID, limit: Int): [Satisfaction!]
+  allSatisfactions(start: ID, limit: Int): [Satisfaction!]
 }
 
-type Mutation {
+type PlanningMutation {
   createCommitment(commitment: CommitmentCreateParams): CommitmentResponse
   updateCommitment(commitment: CommitmentUpdateParams): CommitmentResponse
-  deleteCommitment(id: ID!): Boolean
+  deleteCommitment(id: String!): Boolean
 
   createIntent(intent: IntentCreateParams): IntentResponse
   updateIntent(intent: IntentUpdateParams): IntentResponse
-  deleteIntent(id: ID!): Boolean
+  deleteIntent(id: String!): Boolean
 
   createFulfillment(fulfillment: FulfillmentCreateParams!): FulfillmentResponse
   updateFulfillment(fulfillment: FulfillmentUpdateParams!): FulfillmentResponse
-  deleteFulfillment(id: ID!): Boolean
+  deleteFulfillment(id: String!): Boolean
 
   createSatisfaction(satisfaction: SatisfactionCreateParams): SatisfactionResponse
   updateSatisfaction(satisfaction: SatisfactionUpdateParams): SatisfactionResponse
-  deleteSatisfaction(id: ID!): Boolean
+  deleteSatisfaction(id: String!): Boolean
 }

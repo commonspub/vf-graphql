@@ -91,8 +91,6 @@ input UnitCreateParams {
 }
 
 input UnitUpdateParams {
-  id: ID!
-
   "A human readable label for the unit, can be language specific."
   label: String
 
@@ -104,15 +102,23 @@ type UnitResponse {
   unit: Unit
 }
 
-
-
-type Query {
-  unit(id: ID): Unit
-  units(start: ID, limit: Int): [Unit!]
+type UnitsPage{
+  page_info: PageInfo
+  edges: [Unit]
+  totalCount: Int
 }
 
-type Mutation {
-  createUnit(unit: UnitCreateParams): UnitResponse
-  updateUnit(unit: UnitUpdateParams): UnitResponse
-  deleteUnit(id: ID!): Boolean
+
+
+type MeasurementQuery {
+  unit(id: ID): Unit
+  allUnits(start: ID, limit: Int): [Unit!]
+  units(limit: Int, before: [Cursor], after: [Cursor]): [UnitsPage!]
+
+}
+
+type MeasurementMutation {
+  createUnit(unit: UnitCreateParams, inScopeOfCommunityID: ID): UnitResponse
+  updateUnit(unit: UnitUpdateParams, unitId: ID): UnitResponse
+  deleteUnit(id: String!): Boolean
 }

@@ -26,7 +26,7 @@ type Scenario {
   hasEnd: DateTime
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AccountingScope!]
+  inScopeOf: [AnyType!]
 
   "The scenario definition for this scenario, for example yearly budget."
   definedAs: ScenarioDefinition
@@ -70,7 +70,7 @@ input ScenarioCreateParams {
   hasEnd: DateTime
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [ID!]
+  inScopeOf: [AnyType!]
 
   "(`Scenario`) This scenario refines another scenario, often as time moves closer or for more detail."
   refinementOf: ID
@@ -95,7 +95,7 @@ input ScenarioUpdateParams {
   hasEnd: DateTime
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [ID!]
+  inScopeOf: [AnyType!]
 
   "(`Scenario`) This scenario refines another scenario, often as time moves closer or for more detail."
   refinementOf: ID
@@ -140,20 +140,20 @@ type ScenarioDefinitionResponse {
 
 
 
-type Query {
+type ScenarioQuery {
   scenario(id: ID): Scenario
-  scenarios(start: ID, limit: Int): [Scenario!]
+  allScenarios(start: ID, limit: Int): [Scenario!]
 
   scenarioDefinition(id: ID): ScenarioDefinition
-  scenarioDefinitions(start: ID, limit: Int): [ScenarioDefinition!]
+  allScenarioDefinitions(start: ID, limit: Int): [ScenarioDefinition!]
 }
 
-type Mutation {
+type ScenarioMutation {
   createScenario(plan: ScenarioCreateParams!): ScenarioResponse
   updateScenario(plan: ScenarioUpdateParams!): ScenarioResponse
-  deleteScenario(id: ID!): Boolean
+  deleteScenario(id: String!): Boolean
 
   createScenarioDefinition(plan: ScenarioDefinitionCreateParams!): ScenarioDefinitionResponse
   updateScenarioDefinition(plan: ScenarioDefinitionUpdateParams!): ScenarioDefinitionResponse
-  deleteScenarioDefinition(id: ID!): Boolean
+  deleteScenarioDefinition(id: String!): Boolean
 }

@@ -66,7 +66,7 @@ type EconomicEvent {
   note: String
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AccountingScope!]
+  inScopeOf: [AnyType!]
 
   "Reference to an agreement between agents which specifies the rules or policies or calculations which govern this economic event."
   agreedIn: URI
@@ -74,11 +74,26 @@ type EconomicEvent {
   "References another economic event that implied this economic event, often based on a prior agreement."
   triggeredBy: EconomicEvent
 
+  "This economic event occurs as part of this agreement."
+  realizationOf: Agreement
+
+  "The place where an economic event occurs.  Usually mappable."
+  atLocation: SpatialThing
+
   ##############################################################################
   # inverse relationships and queries
 
   track: [ProductionFlowItem!]
   trace: [ProductionFlowItem!]
+
+  appreciationOf: [Appreciation!]
+  appreciatedBy: [Appreciation!]
+
+  "The commitment which is completely or partially fulfilled by an economic event."
+  fulfills: [Fulfillment!]
+
+  "An intent satisfied fully or partially by an economic event or commitment."
+  satisfies: [Satisfaction!]
 
   "The economic event can be safely deleted, has no dependent information."
   deletable: Boolean
@@ -131,6 +146,9 @@ type EconomicResource {
 
   "The agent currently with primary rights and responsibilites for the economic resource. It is the agent that is associated with the accountingQuantity of the economic resource."
   primaryAccountable: Agent
+
+  "The current place an economic resource is located. Could be at any level of granularity, from a town to an address to a warehouse location. Usually mappable."
+  currentLocation: SpatialThing
 
   ##############################################################################
   # inverse relationships and queries
@@ -187,13 +205,24 @@ type Process {
   note: String
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [AccountingScope!]
+  inScopeOf: [AnyType!]
+
+  "The process with its inputs and outputs is part of the plan."
+  plannedWithin: Plan
+
+  "The process with its inputs and outputs is part of the scenario."
+  nestedIn: Scenario
 
   ##############################################################################
   # inverse relationships and queries
 
   inputs(action: ID): [EconomicEvent!]
   outputs(action: ID): [EconomicEvent!]
+  committedInputs(action: ID): [Commitment!]
+  committedOutputs(action: ID): [Commitment!]
+  intendedInputs(action: ID): [Intent!]
+  intendedOutputs(action: ID): [Intent!]
+
   unplannedEconomicEvents(action: ID): [EconomicEvent!]
 
   nextProcesses: [Process!]
@@ -227,7 +256,7 @@ input EconomicEventCreateParams {
   receiver: ID!
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [ID!]
+  inScopeOf: [AnyType!]
 
   "(`EconomicResource`) Economic resource involved in the economic event."
   resourceInventoriedAs: ID
@@ -288,7 +317,7 @@ input EconomicEventUpdateParams {
   triggeredBy: ID
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [ID!]
+  inScopeOf: [AnyType!]
 }
 
 type EconomicEventResponse {
@@ -401,7 +430,7 @@ input ProcessCreateParams {
   note: String
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [ID!]
+  inScopeOf: [AnyType!]
 
   "(`Plan`) The process with its inputs and outputs is part of the plan."
   plannedWithin: ID
@@ -432,7 +461,7 @@ input ProcessUpdateParams {
   note: String
 
   "Grouping around something to create a boundary or context, used for documenting, accounting, planning."
-  inScopeOf: [ID!]
+  inScopeOf: [AnyType!]
 
   "(`Plan`) The process with its inputs and outputs is part of the plan."
   plannedWithin: ID
@@ -450,10 +479,10 @@ type ProcessResponse {
 
 
 
-type Query {
+type ObservationQuery {
   economicEvent(id: ID): EconomicEvent
-  economicEvents(start: ID, limit: Int): [EconomicEvent!]
-  economicEventsFiltered(
+  allEconomicEvents(start: ID, limit: Int): [EconomicEvent!]
+  filteredEconomicEvents(
     providerId: ID,
     receiverId: ID,
     resourceClassifiedAs: [URI!],
@@ -463,29 +492,29 @@ type Query {
   ): [EconomicEvent!]
 
   economicResource(id: ID): EconomicResource
-  economicResources(start: ID, limit: Int): [EconomicResource!]
+  allEconomicResources(start: ID, limit: Int): [EconomicResource!]
 
   productBatch(id: ID): ProductBatch
-  productBatches(start: ID, limit: Int): [ProductBatch!]
+  allProductBatches(start: ID, limit: Int): [ProductBatch!]
 
   process(id: ID): Process
-  processes(start: ID, limit: Int): [Process!]
+  allProcesses(start: ID, limit: Int): [Process!]
 }
 
-type Mutation {
+type ObservationMutation {
   createEconomicEvent(event: EconomicEventCreateParams!, newInventoriedResource: EconomicResourceCreateParams): EconomicEventResponse
   updateEconomicEvent(event: EconomicEventUpdateParams!): EconomicEventResponse
-  deleteEconomicEvent(id: ID!): Boolean
+  deleteEconomicEvent(id: String!): Boolean
 
   # :TODO: should this be allowed without an originating event? Or should the event be recorded transparently?
   updateEconomicResource(resource: EconomicResourceUpdateParams!): EconomicResourceResponse
-  deleteEconomicResource(id: ID!): Boolean
+  deleteEconomicResource(id: String!): Boolean
 
   createProductBatch(productBatch: ProductBatchCreateParams!): ProductBatchResponse
   updateProductBatch(productBatch: ProductBatchUpdateParams!): ProductBatchResponse
-  deleteProductBatch(id: ID!): Boolean
+  deleteProductBatch(id: String!): Boolean
 
   createProcess(process: ProcessCreateParams!): ProcessResponse
   updateProcess(process: ProcessUpdateParams!): ProcessResponse
-  deleteProcess(id: ID!): Boolean
+  deleteProcess(id: String!): Boolean
 }

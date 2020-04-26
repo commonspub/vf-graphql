@@ -69,6 +69,11 @@ type ResourceSpecification {
 
   "[UNSTABLE] The default unit used for quantifying this resource type."
   defaultUnitOfEffort: Unit
+
+  ##############################################################################
+  # inverse relationships and queries
+
+  conformingResources: [EconomicResource!]
 }
 
 """
@@ -146,23 +151,23 @@ type ProcessSpecificationResponse {
 
 
 
-type Query {
+type KnowledgeQuery {
   action(id: ID): Action
-  actions: [Action!]
+  allActions: [Action!]
 
   resourceSpecification(id: ID): ResourceSpecification
-  resourceSpecifications(start: ID, limit: Int): [ResourceSpecification!]
+  allResourceSpecifications(start: ID, limit: Int): [ResourceSpecification!]
 
   processSpecification(id: ID): ProcessSpecification
-  processSpecifications(start: ID, limit: Int): [ProcessSpecification!]
+  allProcessSpecifications(start: ID, limit: Int): [ProcessSpecification!]
 }
 
-type Mutation {
+type KnowledgeMutation {
   createResourceSpecification(resourceSpecification: ResourceSpecificationCreateParams): ResourceSpecificationResponse
   updateResourceSpecification(resourceSpecification: ResourceSpecificationUpdateParams): ResourceSpecificationResponse
-  deleteResourceSpecification(id: ID!): Boolean
+  deleteResourceSpecification(id: String!): Boolean
 
   createProcessSpecification(processSpecification: ProcessSpecificationCreateParams): ProcessSpecificationResponse
   updateProcessSpecification(processSpecification: ProcessSpecificationUpdateParams): ProcessSpecificationResponse
-  deleteProcessSpecification(id: ID!): Boolean
+  deleteProcessSpecification(id: String!): Boolean
 }
