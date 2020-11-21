@@ -584,7 +584,6 @@ input ClaimCreateParams {
   The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness.
   """
   effortQuantity: IMeasure
-  """
 
   """
   The time the claim is expected to be settled.
