@@ -315,7 +315,7 @@ input agentResourceSearchParams {
   page: Int
 }
 
-enum AgentType {
+enum AgentType { ## added for CPub
   Person
   Organization
 }
@@ -410,8 +410,7 @@ input AgreementUpdateParams {
 }
 
 """
-A way to tie an economic event that is given in loose fulfilment for another
-economic event, without commitments or expectations.
+A way to tie an economic event that is given in loose fulfilment for another economic event, without commitments or expectations. 
 Supports the gift economy.
 """
 type Appreciation {
@@ -495,7 +494,7 @@ type Claim {
   receiver: Agent!
 
   """
-  References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping.
+  References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
   """
   resourceClassifiedAs: [URI!]
 
@@ -510,9 +509,7 @@ type Claim {
   resourceQuantity: Measure
 
   """
-  The amount and unit of the work or use or citation effort-based action. This
-  is often a time duration, but also could be cycle counts or other measures of
-  effort or usefulness.
+  The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness.
   """
   effortQuantity: Measure
 
@@ -532,8 +529,7 @@ type Claim {
   created: DateTime
 
   """
-  The claim is complete or not.  This is irrespective of if the original goal
-  has been met, and indicates that no more will be done.
+  The claim is complete or not.  This is irrespective of if the original goal has been met, and indicates that no more will be done.
   """
   finished: Boolean
 
@@ -570,7 +566,7 @@ input ClaimCreateParams {
   receiver: ID!
 
   """
-  References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping.
+  References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
   """
   resourceClassifiedAs: [URI!]
 
@@ -606,8 +602,7 @@ input ClaimCreateParams {
   created: DateTime
 
   """
-  The claim is complete or not.  This is irrespective of if the original goal
-  has been met, and indicates that no more will be done.
+  The claim is complete or not.  This is irrespective of if the original goal has been met, and indicates that no more will be done.
   """
   finished: Boolean
 
@@ -650,7 +645,7 @@ input ClaimUpdateParams {
   receiver: ID
 
   """
-  References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping.
+  References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
   """
   resourceClassifiedAs: [URI!]
 
@@ -685,8 +680,7 @@ input ClaimUpdateParams {
   created: DateTime
 
   """
-  The claim is complete or not.  This is irrespective of if the original goal
-  has been met, and indicates that no more will be done.
+  The claim is complete or not.  This is irrespective of if the original goal has been met, and indicates that no more will be done.
   """
   finished: Boolean
 
@@ -738,7 +732,7 @@ type Commitment {
   receiver: Agent!
 
   """
-  References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping.
+  References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
   """
   resourceClassifiedAs: [URI!]
 
@@ -758,9 +752,7 @@ type Commitment {
   resourceQuantity: Measure
 
   """
-  The amount and unit of the work or use or citation effort-based action. This
-  is often a time duration, but also could be cycle counts or other measures of
-  effort or usefulness.
+  The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness.
   """
   effortQuantity: Measure
 
@@ -790,8 +782,7 @@ type Commitment {
   created: DateTime
 
   """
-  The commitment is complete or not.  This is irrespective of if the original
-  goal has been met, and indicates that no more will be done.
+  The commitment is complete or not.  This is irrespective of if the original goal has been met, and indicates that no more will be done.
   """
   finished: Boolean
 
@@ -806,8 +797,7 @@ type Commitment {
   inScopeOf: [AccountingScope!]
 
   """
-  Reference to an agreement between agents which specifies the rules or policies
-  or calculations which govern this commitment.
+  Reference to an agreement between agents which specifies the rules or policies or calculations which govern this commitment.
   """
   agreedIn: URI
 
@@ -870,7 +860,7 @@ input CommitmentCreateParams {
   receiver: ID!
 
   """
-  References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping.
+  References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
   """
   resourceClassifiedAs: [URI!]
 
@@ -915,8 +905,7 @@ input CommitmentCreateParams {
   due: DateTime
 
   """
-  The commitment is complete or not.  This is irrespective of if the original
-  goal has been met, and indicates that no more will be done.
+  The commitment is complete or not.  This is irrespective of if the original goal has been met, and indicates that no more will be done.
   """
   finished: Boolean
 
@@ -941,8 +930,7 @@ input CommitmentCreateParams {
   atLocation: ID
 
   """
-  Reference to an agreement between agents which specifies the rules or policies
-  or calculations which govern this commitment.
+  Reference to an agreement between agents which specifies the rules or policies or calculations which govern this commitment.
   """
   agreedIn: URI
 
@@ -980,7 +968,7 @@ input CommitmentUpdateParams {
   receiver: ID
 
   """
-  References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping.
+  References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
   """
   resourceClassifiedAs: [URI!]
 
@@ -1025,8 +1013,7 @@ input CommitmentUpdateParams {
   due: DateTime
 
   """
-  The commitment is complete or not.  This is irrespective of if the original
-  goal has been met, and indicates that no more will be done.
+  The commitment is complete or not.  This is irrespective of if the original goal has been met, and indicates that no more will be done.
   """
   finished: Boolean
 
@@ -1051,8 +1038,7 @@ input CommitmentUpdateParams {
   atLocation: ID
 
   """
-  Reference to an agreement between agents which specifies the rules or policies
-  or calculations which govern this commitment.
+  Reference to an agreement between agents which specifies the rules or policies or calculations which govern this commitment.
   """
   agreedIn: URI
 
@@ -1063,8 +1049,7 @@ input CommitmentUpdateParams {
 }
 
 """
-An observed economic flow, as opposed to a flow planned to happen in the future.
-This could reflect a change in the quantity of an economic resource. It is also defined by its behavior in relation to the economic resource (see `Action`)
+An observed economic flow, as opposed to a flow planned to happen in the future. This could reflect a change in the quantity of an economic resource. It is also defined by its behavior in relation to the economic resource (see `Action`)
 """
 type EconomicEvent {
   id: ID!
@@ -1105,7 +1090,7 @@ type EconomicEvent {
   toResourceInventoriedAs: EconomicResource
 
   """
-  References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping.
+  References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
   """
   resourceClassifiedAs: [URI!]
 
@@ -1115,16 +1100,12 @@ type EconomicEvent {
   resourceConformsTo: ResourceSpecification
 
   """
-  The amount and unit of the economic resource counted or inventoried. This is
-  the quantity that could be used to increment or decrement a resource,
-  depending on the type of resource and resource effect of action.
+  The amount and unit of the economic resource counted or inventoried. This is the quantity that could be used to increment or decrement a resource, depending on the type of resource and resource effect of action.
   """
   resourceQuantity: Measure
 
   """
-  The amount and unit of the work or use or citation effort-based action. This
-  is often a time duration, but also could be cycle counts or other measures of
-  effort or usefulness.
+  The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness.
   """
   effortQuantity: Measure
 
@@ -1154,8 +1135,7 @@ type EconomicEvent {
   inScopeOf: [AccountingScope!]
 
   """
-  Reference to an agreement between agents which specifies the rules or policies
-  or calculations which govern this economic event.
+  Reference to an agreement between agents which specifies the rules or policies or calculations which govern this economic event.
   """
   agreedIn: URI
 
@@ -1195,7 +1175,7 @@ type EconomicEvent {
 
   """
   Tags/Categories in a taxonomy, linked to resourceClassifiedAs:
-  References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping.
+  References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
   """
   tags: [AnyContext] ## added for CPub
 }
@@ -1237,7 +1217,7 @@ input EconomicEventCreateParams {
   resourceInventoriedAs: ID
 
   """
-  References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping.
+  References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
   """
   resourceClassifiedAs: [URI!]
 
@@ -1282,8 +1262,7 @@ input EconomicEventCreateParams {
   note: String
 
   """
-  Reference to an agreement between agents which specifies the rules or policies
-  or calculations which govern this economic event.
+  Reference to an agreement between agents which specifies the rules or policies or calculations which govern this economic event.
   """
   agreedIn: URI
 
@@ -1304,7 +1283,7 @@ input EconomicEventCreateParams {
 
   """
   Tags/Categories in a taxonomy, linked to resourceClassifiedAs:
-  References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping.
+  References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
   """
   tags: [ID!] ## added for CPub
 }
@@ -1330,8 +1309,7 @@ input EconomicEventUpdateParams {
   note: String
 
   """
-  Reference to an agreement between agents which specifies the rules or policies
-  or calculations which govern this economic event.
+  Reference to an agreement between agents which specifies the rules or policies or calculations which govern this economic event.
   """
   agreedIn: URI
 
@@ -1441,7 +1419,7 @@ type EconomicResource {
 
   """
   Tags/Categories in a taxonomy, linked to resourceClassifiedAs:
-  References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping.
+  References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
   """
   tags: [ID!] ## added for CPub
 }
@@ -1492,7 +1470,7 @@ input EconomicResourceCreateParams {
 
   """
   Tags/Categories in a taxonomy, linked to resourceClassifiedAs:
-  References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping.
+  References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
   """
   tags: [ID!] ## added for CPub
 }
@@ -1505,8 +1483,7 @@ input EconomicResourceUpdateParams {
   id: ID!
 
   """
-  References one or more concepts in a common taxonomy or other classification
-  scheme for purposes of categorization or grouping.
+  References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
   """
   classifiedAs: [URI!]
 
@@ -1533,10 +1510,6 @@ input EconomicResourceUpdateParams {
 
 union EventOrCommitment = EconomicEvent | Commitment
 
-"""
-Only used for workaround mentioned in readme
-"""
-scalar ExternalType
 
 """
 Represents many-to-many relationships between commitments and economic events that fully or partially satisfy one or more commitments.
@@ -1620,9 +1593,7 @@ input FulfillmentUpdateParams {
   resourceQuantity: IMeasure
 
   """
-  The amount and unit of the work or use or citation effort-based action. This
-  is often a time duration, but also could be cycle counts or other measures of
-  effort or usefulness.
+  The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness.
   """
   effortQuantity: IMeasure
 
@@ -1662,22 +1633,20 @@ type Intent {
   The economic agent from whom the intent is initiated. This implies that the intent is an offer.
   """
   provider: Agent
-  # provider: User   # WIP untill we will implement agent
 
   """
   The economic agent whom the intent is for.  This implies that the intent is a request.
   """
   receiver: Agent
-  # receiver: User
 
   """
-  References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping.
+  References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
   """
   resourceClassifiedAs: [URI!]
 
   """
   Tags/Categories in a taxonomy, linked to resourceClassifiedAs:
-  References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping.
+  References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
   """
   tags: [AnyContext] ## added for CPub
 
@@ -1734,7 +1703,7 @@ type Intent {
   """
   The uri to an image relevant to the intent, such as a photo. // WIP FIXME adding content rather than uri
   """
-  image: Content
+  image: URI 
 
   """
   A textual description or comment.
@@ -1803,13 +1772,13 @@ input IntentCreateParams {
   resourceConformsTo: ID
 
   """
-  References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping.
+  References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
   """
   resourceClassifiedAs: [URI!]
 
   """
   Tags/Categories in a taxonomy, linked to resourceClassifiedAs:
-  References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping.
+  References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
   """
   tags: [ID!] ## added for CPub
 
@@ -1856,7 +1825,7 @@ input IntentCreateParams {
   """
   The uri to an image relevant to the intent, such as a photo.
   """
-  image: UploadInput
+  image: URI
 
   """
   A textual description or comment.
@@ -1927,7 +1896,7 @@ input IntentUpdateParams {
   resourceConformsTo: ID
 
   """
-  References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping.
+  References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
   """
   resourceClassifiedAs: [URI!]
 
@@ -1974,7 +1943,7 @@ input IntentUpdateParams {
   """
   The uri to an image relevant to the intent, such as a photo.
   """
-  image: UploadInput
+  image: URI
 
   """
   The intent is complete or not.  This is irrespective of if the original goal has been met, and indicates that no more will be done.
@@ -2245,8 +2214,7 @@ type Process {
   basedOn: ProcessSpecification
 
   """
-  References one or more concepts in a common taxonomy or other classification
-  scheme for purposes of categorization or grouping.
+  References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
   """
   classifiedAs: [URI!]
 
@@ -2289,7 +2257,7 @@ type Process {
 
   """
   Tags/Categories in a taxonomy, linked to resourceClassifiedAs:
-  References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping.
+  References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
   """
   tags: [AnyContext!] ## added for CPub
 }
@@ -2336,14 +2304,13 @@ input ProcessCreateParams {
   basedOn: ID
 
   """
-  References one or more concepts in a common taxonomy or other classification
-  scheme for purposes of categorization or grouping.
+  References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
   """
   classifiedAs: [URI!]
 
   """
   Tags/Categories in a taxonomy, linked to resourceClassifiedAs:
-  References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping.
+  References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
   """
   tags: [ID!] ## added for CPub
 }
@@ -2540,8 +2507,7 @@ type Proposal {
   inScopeOf: [AccountingScope!]
 
   """
-  This proposal contains unit based quantities, which can be multipied to create
-  commitments; commonly seen in a price list or e-commerce.
+  This proposal contains unit based quantities, which can be multipied to create commitments; commonly seen in a price list or e-commerce.
   """
   unitBased: Boolean
 
@@ -2601,8 +2567,7 @@ input ProposalCreateParams {
   inScopeOf: [ID!]
 
   """
-  This proposal contains unit based quantities, which can be multipied to create
-  commitments; commonly seen in a price list or e-commerce.
+  This proposal contains unit based quantities, which can be multipied to create commitments; commonly seen in a price list or e-commerce.
   """
   unitBased: Boolean
 
@@ -2650,8 +2615,7 @@ input ProposalUpdateParams {
   inScopeOf: [ID!]
 
   """
-  This proposal contains unit based quantities, which can be multipied to create
-  commitments; commonly seen in a price list or e-commerce.
+  This proposal contains unit based quantities, which can be multipied to create commitments; commonly seen in a price list or e-commerce.
   """
   unitBased: Boolean
 
@@ -2720,9 +2684,7 @@ type RecipeFlow {
   resourceQuantity: Measure
 
   """
-  The amount and unit of the work or use or citation effort-based action. This
-  is often a time duration, but also could be cycle counts or other measures of
-  effort or usefulness.
+  The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness.
   """
   effortQuantity: Measure
 
@@ -3018,7 +2980,7 @@ type RecipeResource {
   resourceConformsTo: ResourceSpecification
 
   """
-  References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping.
+  References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
   """
   resourceClassifiedAs: [URI!]
 
@@ -3026,6 +2988,23 @@ type RecipeResource {
   Defines if any resource of that type can be freely substituted for any other resource of that type when used, consumed, traded, etc.
   """
   substitutable: Boolean
+}
+
+"""
+Specifies an exchange agreement as part of a recipe.
+"""
+type RecipeExchange {
+  id: ID!
+
+  """
+  An informal or formal textual identifier for a recipe exchange. Does not imply uniqueness.
+  """
+  name: String!
+
+  """
+  A textual description or comment.
+  """
+  note: String
 }
 
 input RecipeResourceCreateParams {
@@ -3045,8 +3024,7 @@ input RecipeResourceCreateParams {
   unitOfEffort: ID
 
   """
-  Defines if any resource of that type can be freely substituted for any other
-  resource of that type when used, consumed, traded, etc.
+  Defines if any resource of that type can be freely substituted for any other resource of that type when used, consumed, traded, etc.
   """
   substitutable: Boolean
 
@@ -3061,7 +3039,7 @@ input RecipeResourceCreateParams {
   resourceConformsTo: ID
 
   """
-  References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping.
+  References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
   """
   resourceClassifiedAs: [URI!]
 
@@ -3109,7 +3087,7 @@ input RecipeResourceUpdateParams {
   resourceConformsTo: ID
 
   """
-  References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping.
+  References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
   """
   resourceClassifiedAs: [URI!]
 
@@ -3137,7 +3115,7 @@ type ResourceSpecification {
   image: URI
 
   """
-  References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping.
+  References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
   """
   resourceClassifiedAs: [URI!]
 
@@ -3147,9 +3125,15 @@ type ResourceSpecification {
   note: String
 
   """
-  [UNSTABLE] The default unit used for quantifying this resource type.
+  The default unit used for the resource itself.
+  """
+  defaultUnitOfResource: Unit ## TODO
+
+  """
+  The default unit used for use or work.
   """
   defaultUnitOfEffort: Unit
+
   conformingResources: [EconomicResource!]
 }
 
@@ -3165,7 +3149,7 @@ input ResourceSpecificationCreateParams {
   image: URI
 
   """
-  References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping.
+  References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
   """
   resourceClassifiedAs: [URI!]
 
@@ -3175,7 +3159,12 @@ input ResourceSpecificationCreateParams {
   note: String
 
   """
-  (`Unit`) [UNSTABLE] The default unit used for quantifying this resource type.
+  (`Unit`) The default unit used for the resource itself.
+  """
+  defaultUnitOfResource: ID ## TODO
+
+  """
+  (`Unit`) The default unit used for use or work.
   """
   defaultUnitOfEffort: ID
 }
@@ -3198,7 +3187,7 @@ input ResourceSpecificationUpdateParams {
   image: URI
 
   """
-  References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping.
+  References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
   """
   resourceClassifiedAs: [URI!]
 
@@ -3208,7 +3197,12 @@ input ResourceSpecificationUpdateParams {
   note: String
 
   """
-  (`Unit`) [UNSTABLE] The default unit used for quantifying this resource type.
+  (`Unit`) The default unit used for the resource itself.
+  """
+  defaultUnitOfResource: ID ## TODO
+
+  """
+  (`Unit`) The default unit used for use or work.
   """
   defaultUnitOfEffort: ID
 }
@@ -3235,9 +3229,7 @@ type Satisfaction {
   resourceQuantity: Measure
 
   """
-  The amount and unit of the work or use or citation effort-based action. This
-  is often a time duration, but also could be cycle counts or other measures of
-  effort or usefulness.
+  The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness.
   """
   effortQuantity: Measure
 
@@ -3264,9 +3256,7 @@ input SatisfactionCreateParams {
   resourceQuantity: IMeasure
 
   """
-  The amount and unit of the work or use or citation effort-based action. This
-  is often a time duration, but also could be cycle counts or other measures of
-  effort or usefulness.
+  The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness.
   """
   effortQuantity: IMeasure
 
@@ -3299,9 +3289,7 @@ input SatisfactionUpdateParams {
   resourceQuantity: IMeasure
 
   """
-  The amount and unit of the work or use or citation effort-based action. This
-  is often a time duration, but also could be cycle counts or other measures of
-  effort or usefulness.
+  The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness.
   """
   effortQuantity: IMeasure
 
@@ -3577,9 +3565,7 @@ input SettlementUpdateParams {
   resourceQuantity: IMeasure
 
   """
-  The amount and unit of the work or use or citation effort-based action. This
-  is often a time duration, but also could be cycle counts or other measures of
-  effort or usefulness.
+  The amount and unit of the work or use or citation effort-based action. This is often a time duration, but also could be cycle counts or other measures of effort or usefulness.
   """
   effortQuantity: IMeasure
 
@@ -3721,7 +3707,7 @@ type ValueFlowsQuery {
   scenarioDefinition(id: ID): ScenarioDefinition
   scenarioDefinitions(start: ID, limit: Int): [ScenarioDefinition!]
 
-  # CommonsPub additional queries:
+  ## CPub additional queries:
 
   "Get paginated list of proposals"
   proposalsPages(
@@ -3752,10 +3738,7 @@ type ValueFlowsQuery {
     atLocation: [ID]
     geolocation: GeolocationFilters
     agent: [ID]
-  ): # provider: [ID]
-  # receiver: [ID]
-  # action: [ID]
-  [Proposal]
+  ): [Proposal]
 
   "Get paginated list of active offers (intents with no receiver)"
   offersPages(limit: Int, before: [Cursor!], after: [Cursor!]): IntentsPage!
@@ -4008,7 +3991,7 @@ type ValueFlowsMutation {
 
 
 
-# CommonsPub additional types:
+## CPub additional types:
 
 "A page of agents"
 type AgentsPage {
@@ -4063,80 +4046,117 @@ A physical mappable location.
 type SpatialThing {
   id: ID!
 
-  "An informal or formal textual identifier for a location. Does not imply uniqueness."
+  """
+  An informal or formal textual identifier for a location. Does not imply uniqueness.
+  """
   name: String!
 
-  "An address that will be recognized as mappable by mapping software."
+  """
+  An address that will be recognized as mappable by mapping software.
+  """
   mappableAddress: String
 
-  "Latitude."
+  """
+  Latitude.
+  """
   lat: Float
 
-  "Longitude."
+  """
+  Longitude.
+  """
   long: Float
 
-  "Altitude."
+  """
+  Altitude.
+  """
   alt: Float
 
-  "A textual description or comment."
+  """
+  A textual description or comment.
+  """
   note: String
 
-  geom: Json
+  """
+  Geolocation encoded as GeoJSON
+  """
+  geom: Json ## added for CPub
 
-  ##############################################################################
-  # inverse relationships and queries - FIXME
-  # agents: [Agent!]
-  # economicResources: [EconomicResource!]
-  # economicEvents: [EconomicEvent!]
-  # commitments: [Commitment!]
-  # intents: [Intent!]
 
-  ## CommonsPub-specific
+  canonicalUrl: String ## added for CPub
+  displayUsername: String ## added for CPub
+  inScopeOf: AnyContext ## added for CPub
 
-  canonicalUrl: String
-  displayUsername: String
-  inScopeOf: AnyContext
+  ## TODO:
+  agents: [Agent!]
+  economicResources: [EconomicResource!]
+  economicEvents: [EconomicEvent!]
+  commitments: [Commitment!]
+  intents: [Intent!]
 }
 
 input SpatialThingCreateParams {
-  "An informal or formal textual identifier for a location. Does not imply uniqueness."
+  """
+  An informal or formal textual identifier for a location. Does not imply uniqueness.
+  """
   name: String!
 
-  "An address that will be recognized as mappable by mapping software."
+  """
+  An address that will be recognized as mappable by mapping software.
+  """
   mappableAddress: String
 
-  "Latitude."
+  """
+  Latitude.
+  """
   lat: Float
 
-  "Longitude."
+  """
+  Longitude.
+  """
   long: Float
 
-  "Altitude."
+  """
+  Altitude.
+  """
   alt: Float
 
-  "A textual description or comment."
+  """
+  A textual description or comment.
+  """
   note: String
 }
 
 input SpatialThingUpdateParams {
   id: ID!
 
-  "An informal or formal textual identifier for a location. Does not imply uniqueness."
-  name: String
+  """
+  An informal or formal textual identifier for a location. Does not imply uniqueness.
+  """
+  name: String!
 
-  "An address that will be recognized as mappable by mapping software."
+  """
+  An address that will be recognized as mappable by mapping software.
+  """
   mappableAddress: String
 
-  "Latitude."
+  """
+  Latitude.
+  """
   lat: Float
 
-  "Longitude."
+  """
+  Longitude.
+  """
   long: Float
 
-  "Altitude."
+  """
+  Altitude.
+  """
   alt: Float
 
-  "A textual description or comment."
+  """
+  A textual description or comment.
+  """
   note: String
 }
 
@@ -4171,7 +4191,9 @@ type GeolocationMutation {
   deleteSpatialThing(id: ID!): Boolean
 }
 
-# added these types for filtering, to be extended:...
+
+## Added for CPub - extra types for seaching/filtering by geolocation, to be extended:
+
 input GeolocationDistance {
   meters: Int
 }
@@ -4207,10 +4229,14 @@ enum TimeUnit {
 A `Duration` represents an interval between two `DateTime` values.
 """
 type Duration {
-  "A number representing the duration, will be paired with a unit."
+  """
+  A number representing the duration, will be paired with a unit.
+  """
   numericDuration: Float!
 
-  "A unit of measure."
+  """
+  A unit of measure.
+  """
   unitType: TimeUnit!
 }
 
@@ -4218,10 +4244,14 @@ type Duration {
 Mutation input structure for defining time durations.
 """
 input IDuration {
-  "A number representing the duration, will be paired with a unit."
+  """
+  A number representing the duration, will be paired with a unit.
+  """
   numericDuration: Float!
 
-  "A unit of measure."
+  """
+  A unit of measure.
+  """
   unitType: TimeUnit!
 }
 
@@ -4232,18 +4262,17 @@ From OM2 vocabulary.
 type Unit {
   id: ID!
 
-  "A human readable label for the unit, can be language specific."
+  """
+  A human readable label for the unit, can be language specific.
+  """
   label: String!
 
-  "A standard display symbol for a unit of measure."
+  """
+  A standard display symbol for a unit of measure.
+  """
   symbol: String!
 
-  inScopeOf: AnyContext
-
-  """
-  Added for CommonsPub
-  """
-  canonicalUrl: URI
+  canonicalUrl: URI ## added for CPub
 }
 
 """
@@ -4253,50 +4282,58 @@ See http://www.qudt.org/pages/QUDToverviewPage.html
 type Measure {
   id: ID!
 
-  "A number representing the quantity, will be paired with a unit."
+  """
+  A number representing the quantity, will be paired with a unit.
+  """
   hasNumericalValue: Float!
 
-  "A unit of measure."
-  hasUnit: Unit!
+  """
+  A unit of measure.
+  """
+  hasUnit: Unit
 
-  """
-  Added for CommonsPub
-  """
-  canonicalUrl: URI
+  canonicalUrl: URI ## added for CPub
 }
 
 """
 Mutation input structure for defining measurements. Should be nulled if not present, rather than empty.
 """
 input IMeasure {
-  "A number representing the quantity, will be paired with a unit."
+  """
+  A number representing the quantity, will be paired with a unit.
+  """
   hasNumericalValue: Float!
 
-  "(`Unit`) A unit of measure."
-  hasUnit: ID!
+  """
+  (`Unit`) A unit of measure.
+  """
+  hasUnit: ID
 }
 
-# CommonsPub specifics
-
 input UnitCreateParams {
-  "A human readable label for the unit, can be language specific."
+  """
+  A human readable label for the unit, can be language specific.
+  """
   label: String!
 
-  "A standard display symbol for a unit of measure."
+  """
+  A standard display symbol for a unit of measure.
+  """
   symbol: String!
-
-  inScopeOf: ID
 }
 
 input UnitUpdateParams {
-  "A human readable label for the unit, can be language specific."
+  id: ID!
+
+  """
+  A human readable label for the unit, can be language specific.
+  """
   label: String
 
-  "A standard display symbol for a unit of measure."
+  """
+  A standard display symbol for a unit of measure.
+  """
   symbol: String
-
-  "The primary key of the unit to update."
-  id: ID!
 }
 
 type UnitResponse {

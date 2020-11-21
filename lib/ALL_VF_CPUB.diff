@@ -1,0 +1,836 @@
+@@ -2229,14 +2359,13 @@
+   action: Action!
+   action: Action!
+   action: Action!
++    action: [ID]
+     action: ID
+   action: ID
+   action: ID
+   action: ID
+   action: ID
+   action: ID
+-  action: ID
+-  action: ID!
+   action: ID!
+   action: ID!
+   action: ID!
+@@ -2251,10 +2380,21 @@
+   (`Action`) Relates a process input or output to a verb, such as consume, produce, work, modify, etc.
+   (`Action`) Relates a process input or output to a verb, such as consume, produce, work, modify, etc.
+   actions: [Action!]
++  action: String
++  action: String!
++## Added for CPub - extra types for seaching/filtering by geolocation, to be extended:
+   Additional economic resource on the economic event when needed by the receiver. Used when a transfer or move, or sometimes other actions, requires explicitly identifying an economic resource on the receiving side.
+ A `Duration` represents an interval between two `DateTime` values.
+ A formal or informal group, or legal organization.
++    after: [Cursor!]
++    after: [Cursor!]
++    after: [Cursor!]
++    after: [Cursor!]
++    after: [Cursor]
+   after: DateTime
++    agent: [ID]
++    agent: [ID]
++    agent: [ID]
+   agent(id: ID): Agent
+   agent: Organization!
+   agent: Person!
+@@ -2273,13 +2413,18 @@
+   (`AgentRelationshipRole`) The role of an economic relationship that exists between 2 agents, such as member, trading partner.
+   agentRelationships(start: ID, limit: Int): [AgentRelationship!]
+   agents: [Agent!]
++  ): AgentsPage!
+   agents(start: ID, limit: Int): [Agent!]
+   (`Agent`) The economic agent from whom the actual economic event is initiated.
++  (`Agent`) The economic agent from whom the claim is initiated.
++  (`Agent`) The economic agent from whom the claim is initiated.
+   (`Agent`) The economic agent from whom the commitment is initiated.
+   (`Agent`) The economic agent from whom the commitment is initiated.
+   (`Agent`) The economic agent from whom the intent is initiated. This implies that the intent is an offer.
+   (`Agent`) The economic agent from whom the intent is initiated. This implies that the intent is an offer.
+   (`Agent`) The economic agent whom the actual economic event is for.
++  (`Agent`) The economic agent whom the claim is for.
++  (`Agent`) The economic agent whom the claim is for.
+   (`Agent`) The economic agent whom the commitment is for.
+   (`Agent`) The economic agent whom the commitment is for.
+   (`Agent`) The economic agent whom the intent is for.  This implies that the intent is a request.
+@@ -2288,6 +2433,9 @@
+   (`Agent`) The object of a relationship between 2 agents.  For example, if Mary is a member of a group, then the group is the object.
+   (`Agent`) The subject of a relationship between 2 agents.  For example, if Mary is a member of a group, then Mary is the subject.
+   (`Agent`) The subject of a relationship between 2 agents.  For example, if Mary is a member of a group, then Mary is the subject.
++  agentType: AgentType ## added for CPub
++  agentType: AgentType ## added for CPub
++  agentType: AgentType ## added for CPub
+   agreedIn: URI
+   agreedIn: URI
+   agreedIn: URI
+@@ -2330,8 +2478,6 @@
+   An informal or formal textual identifier for a location. Does not imply uniqueness.
+   An informal or formal textual identifier for a location. Does not imply uniqueness.
+   An informal or formal textual identifier for a location. Does not imply uniqueness.
+-  An informal or formal textual identifier for an agent. Does not imply uniqueness.
+-  An informal or formal textual identifier for an agent. Does not imply uniqueness.
+   An informal or formal textual identifier for an agent. Does not imply uniqueness.
+   An informal or formal textual identifier for an agent. Does not imply uniqueness.
+   An informal or formal textual identifier for an agent. Does not imply uniqueness.
+@@ -2382,6 +2528,12 @@
+   A number representing the quantity, will be paired with a unit.
+   A number representing the quantity, will be paired with a unit.
+ Any type of agreement among economic agents.
++"A page of agents"
++"A page of Economic Events"
++"A page of Economic Resources"
++"A page of intents"
++"A page of Processes"
++"A page of proposals"
+ A person or group or organization with economic agency.
+ A physical mappable location.
+ A planned economic flow that has been promised by an agent to another agent.
+@@ -2481,8 +2633,8 @@
+   A textual description or comment.
+   A textual description or comment.
+   A textual description or comment.
+-  A textual description or comment.
+-  A textual description or comment.
++    atLocation: [ID]
++    atLocation: [ID]
+   atLocation: ID
+   atLocation: ID
+   atLocation: ID
+@@ -2498,14 +2650,28 @@
+   availableQuantity: IMeasure
+   availableQuantity: IMeasure
+   availableQuantity: Measure
+-A way to tie an economic event that is given in loose fulfilment for another economic event, without commitments or expectations.
++A way to tie an economic event that is given in loose fulfilment for another economic event, without commitments or expectations. 
+   basedOn: ID
+   basedOn: ID
+   basedOn: ProcessSpecification
+   batchNumber: String
+   batchNumber: String!
+   batchNumber: String!
++    before: [Cursor!]
++    before: [Cursor!]
++    before: [Cursor!]
++    before: [Cursor!]
++    before: [Cursor]
+   before: DateTime
++  canonicalUrl: String ## added for CPub
++  canonicalUrl: String ## added for CPub
++  canonicalUrl: String ## added for CPub
++  canonicalUrl: String ## added for CPub
++  canonicalUrl: URI ## added for CPub
++  canonicalUrl: URI ## added for CPub
++  canonicalUrl: URI ## added for CPub
++  canonicalUrl: URI ## added for CPub
++  | Category
+   (`Claim`) A claim which is fully or partially settled by an economic event.
+   (`Claim`) A claim which is fully or partially settled by an economic event.
+   claim: Claim
+@@ -2516,12 +2682,10 @@
+   classifiedAs: [URI!]
+   classifiedAs: [URI!]
+   classifiedAs: [URI!]
+-  classifiedAs: [URI!]
+-  classifiedAs: [URI!]
+-  classifiedAs: [URI!]
+   clauseOf: Agreement
+   clauseOf: ID
+   clauseOf: ID
++  | Collection
+   commitment: Commitment
+   (`Commitment`|`EconomicEvent`) A commitment or economic event fully or partially satisfying an intent.
+   (`Commitment`|`EconomicEvent`) A commitment or economic event fully or partially satisfying an intent.
+@@ -2536,6 +2700,7 @@
+   (`Commitment`) The commitment which is completely or partially fulfilled by an economic event.
+   committedInputs(action: ID): [Commitment!]
+   committedOutputs(action: ID): [Commitment!]
++  | Community
+   conformingResources: [EconomicResource!]
+   conformsTo: ID
+   conformsTo: ResourceSpecification!
+@@ -2543,6 +2708,8 @@
+   containedIn: ID
+   containedIn: ID
+   contains: [EconomicResource!]
++  ## CPub additional queries:
++## CPub additional types:
+   createAgentRelationship(
+   createAgentRelationshipRole(
+   createAgreement(agreement: AgreementCreateParams): AgreementResponse
+@@ -2564,7 +2731,9 @@
+   createEconomicEvent(
+   createFulfillment(fulfillment: FulfillmentCreateParams!): FulfillmentResponse
+   createIntent(intent: IntentCreateParams): IntentResponse
+-  createOrganization(
++  createNeed(intent: IntentCreateParams): IntentResponse
++  createOffer(intent: IntentCreateParams): IntentResponse
++  createOrganization(organization: AgentCreateParams!): OrganizationResponse
+   createPerson(person: AgentCreateParams!): PersonResponse
+   createPlan(plan: PlanCreateParams!): PlanResponse
+   createProcess(process: ProcessCreateParams!): ProcessResponse
+@@ -2576,12 +2745,16 @@
+   createRecipeProcess(
+   createRecipeResource(
+   createResourceSpecification(
++  Creates a new need for the logged in user, will ignore any receiver specified.
++  Creates a new offer for the logged in user, will ignore any provider specified.
+   createSatisfaction(
+   createScenarioDefinition(
+   createScenario(plan: ScenarioCreateParams!): ScenarioResponse
+   createSettlement(settlement: SettlementCreateParams!): SettlementResponse
+   createSpatialThing(
+-  createUnit(unit: UnitCreateParams): UnitResponse
++  createUnit(unit: UnitCreateParams!): UnitResponse
++  creator: Agent ## added for CPub
++    currentLocation: [ID]
+   currentLocation: ID
+   currentLocation: SpatialThing
+   Date the batch was produced.  Can be derived from the economic event of production.
+@@ -2591,9 +2764,9 @@
+   defaultUnitOfEffort: ID
+   defaultUnitOfEffort: ID
+   defaultUnitOfEffort: Unit
+-  defaultUnitOfResource: ID
+-  defaultUnitOfResource: ID
+-  defaultUnitOfResource: Unit
++  defaultUnitOfResource: ID ## TODO
++  defaultUnitOfResource: ID ## TODO
++  defaultUnitOfResource: Unit ## TODO
+   definedAs: ID!
+   definedAs: ID!
+   definedAs: ScenarioDefinition
+@@ -2646,6 +2819,11 @@
+   Denotes if a process input or output, or not related to a process.
+   Details of any newly created `EconomicResource`, for events that create new resources.
+   Details of the newly created event.
++  displayUsername: String ## added for CPub
++  displayUsername: String ## added for CPub
++  displayUsername: String ## added for CPub
++  displayUsername: String ## added for CPub
++  distance: GeolocationDistance
+   due: DateTime
+   due: DateTime
+   due: DateTime
+@@ -2661,6 +2839,7 @@
+   ): [EconomicEvent!]
+   economicEvent: EconomicEvent!
+   economicEvent(id: ID): EconomicEvent
++  ): EconomicEventPage!
+   (`EconomicEvent`) References another economic event that implied this economic event, often based on a prior agreement.
+   (`EconomicEvent`) References another economic event that implied this economic event, often based on a prior agreement.
+   ): EconomicEventResponse
+@@ -2670,6 +2849,7 @@
+   economicEvents(filter: agentEventSearchParams): [EconomicEvent!]
+   economicEvents(filter: agentEventSearchParams): [EconomicEvent!]
+   economicEventsFiltered(
++  economicEventsPages(
+   economicEvents(start: ID, limit: Int): [EconomicEvent!]
+   (`EconomicEvent`) The economic event fully or partially settling a claim.
+   (`EconomicEvent`) The economic event fully or partially settling a claim.
+@@ -2684,6 +2864,7 @@
+   ): [EconomicResource!]
+   ): [EconomicResource!]
+   ): [EconomicResource!]
++  ): [EconomicResource]
+   (`EconomicResource`) Additional economic resource on the economic event when needed by the receiver. Used when a transfer or move, or sometimes other actions, requires explicitly identifying an economic resource on the receiving side.
+   economicResource: EconomicResource
+   economicResource: EconomicResource!
+@@ -2692,13 +2873,25 @@
+   (`EconomicResource`) Exact economic resource involved in the commitment.
+   economicResource(id: ID): EconomicResource
+   Economic resource involved in the economic event.
++  ): EconomicResourcePage!
+   ): EconomicResourceResponse
+   economicResources: [EconomicResource!]
++  economicResourcesFiltered(
++  economicResourcesPages(
+   economicResources(start: ID, limit: Int): [EconomicResource!]
+   (`EconomicResource`) Used when a stock economic resource contains items also defined as economic resources.
+   (`EconomicResource`) Used when a stock economic resource contains items also defined as economic resources.
+   (`EconomicResource`) When a specific `EconomicResource` is known which can service the `Intent`, this defines that resource.
+   (`EconomicResource`) When a specific `EconomicResource` is known which can service the `Intent`, this defines that resource.
++  edges: [Agent!]!
++  edges: [EconomicEvent!]!
++  edges: [EconomicResource!]!
++  edges: [Intent!]!
++  edges: [Measure!]
++  edges: [Process!]!
++  edges: [Proposal!]!
++  edges: [SpatialThing]
++  edges: [Unit!]
+   effortQuantity: IMeasure
+   effortQuantity: IMeasure
+   effortQuantity: IMeasure
+@@ -2729,6 +2922,7 @@
+   endDate: DateTime
+   endDate: DateTime
+     endDate: String
++enum AgentType { ## added for CPub
+ enum TimeUnit {
+   Erase record of an organization and thus remove it from the collaboration space
+   Erase record of a person and thus remove them from the collaboration space
+@@ -2740,6 +2934,7 @@
+   expiryDate: DateTime
+   expiryDate: DateTime
+   expiryDate: DateTime
++## extended for CPub (default was `Person | Organization`)
+     filter: agentResourceSearchParams
+     filter: agentResourceSearchParams
+     filter: agentResourceSearchParams
+@@ -2776,6 +2971,20 @@
+   fulfills: [Fulfillment!]
+   fulfills: ID
+   fulfills: ID!
++  Geolocation encoded as GeoJSON
++    geolocation: GeolocationFilters
++    geolocation: GeolocationFilters
++    geolocation: GeolocationFilters
++  geom: Json ## added for CPub
++  "Get paginated list of active needs (intents with no provider)"
++  "Get paginated list of active offers (intents with no receiver)"
++  "Get paginated list of economic events"
++  "Get paginated list of economic resources"
++  "Get paginated list of intents"
++  "Get paginated list of organizations"
++  "Get paginated list of people"
++  "Get paginated list of processes"
++  "Get paginated list of proposals"
+   Grouping around something to create a boundary or context, used for documenting, accounting, planning.
+   Grouping around something to create a boundary or context, used for documenting, accounting, planning.
+   Grouping around something to create a boundary or context, used for documenting, accounting, planning.
+@@ -2928,9 +3137,7 @@
+   image: URI
+   image: URI
+   image: URI
+-  image: URI
+-  image: URI
+-  image: URI
++  image: URI 
+   Include an existing intent as part of a proposal.
+   independentDemandOf: ID
+   independentDemandOf: ID
+@@ -2964,6 +3171,9 @@
+ input EconomicResourceUpdateParams {
+ input FulfillmentCreateParams {
+ input FulfillmentUpdateParams {
++input GeolocationDistance {
++input GeolocationFilters {
++input GeolocationPoint {
+ input IDuration {
+ input IMeasure {
+ input IntentCreateParams {
+@@ -2976,8 +3186,6 @@
+   inputOf: Process
+   inputOf: Process
+   inputOf: Process
+-input OrganizationCreateParams {
+-input OrganizationUpdateParams {
+   inputOutput: String
+ input PlanCreateParams {
+ input planProcessSearchParams {
+@@ -3022,6 +3230,12 @@
+   inScopeOf: [AccountingScope!]
+   inScopeOf: [AccountingScope!]
+   inScopeOf: [AccountingScope!]
++  inScopeOf: [AccountingScope!] ## added for CPub
++  inScopeOf: AnyContext ## added for CPub
++    inScopeOf: [ID]
++    inScopeOf: [ID]
++    inScopeOf: [ID]
++    inScopeOf: ID
+   inScopeOf: [ID!]
+   inScopeOf: [ID!]
+   inScopeOf: [ID!]
+@@ -3038,6 +3252,7 @@
+   inScopeOf: [ID!]
+   intendedInputs(action: ID): [Intent!]
+   intendedOutputs(action: ID): [Intent!]
++  ): [Intent]
+   (`Intent`) An intent satisfied fully or partially by an economic event or commitment.
+   (`Intent`) An intent satisfied fully or partially by an economic event or commitment.
+   intent(id: ID): Intent
+@@ -3045,7 +3260,10 @@
+   intents(filter: agentIntentSearchParams): [Intent!]
+   intents(filter: agentIntentSearchParams): [Intent!]
+   intents(filter: agentIntentSearchParams): [Intent!]
++  intentsFiltered(
+   intents: [Intent!]
++  intentsPages(limit: Int, before: [Cursor!], after: [Cursor!]): IntentsPage!
++  Intent(s) published as part of to this proposal
+   intents(start: ID, limit: Int): [Intent!]
+ interface Agent {
+   inventoriedEconomicResources(
+@@ -3056,7 +3274,6 @@
+   inverseRoleLabel: String
+   involvedAgents: [Agent!]
+   involvedAgents: [Agent!]
+-[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601).
+ It is recommended that the lowercase action verb should be used as the record ID
+   label: String
+   label: String!
+@@ -3065,14 +3282,21 @@
+   lat: Float
+   lat: Float
+   lat: Float
++  lat: Float
+   Latitude.
+   Latitude.
+   Latitude.
++    limit: Int
++    limit: Int
++    limit: Int
++    limit: Int
++    limit: Int
+   Loads all agents publicly registered within this collaboration space
+   Loads all organizations publicly registered within this collaboration space
+   Loads all people who have publicly registered with this collaboration space.
+   Loads details of the currently authenticated REA agent
+   Location or area where the proposal is valid.
++  long: Float
+   long: Float
+   long: Float
+   long: Float
+@@ -3085,13 +3309,15 @@
+   mappableAddress: String
+   mappableAddress: String
+   mappableAddress: String
++  measure(id: ID): Measure
++  measuresPages(limit: Int, before: [Cursor], after: [Cursor]): MeasuresPage!
++  measures(start: ID, limit: Int): [Measure!]
++  meters: Int
+   minute
+   month
+ Mutation input structure for defining measurements. Should be nulled if not present, rather than empty.
+ Mutation input structure for defining time durations.
+   myAgent: Agent
+-  name: String
+-  name: String
+   name: String
+   name: String
+   name: String
+@@ -3138,6 +3364,9 @@
+   name: String!
+   name: String!
+   name: String!
++  nearAddress: String
++  nearPoint: GeolocationPoint
++  needsPages(limit: Int, before: [Cursor!], after: [Cursor!]): IntentsPage!
+   nestedIn: Scenario
+     newInventoriedResource: EconomicResourceCreateParams
+   nextProcesses: [Process!]
+@@ -3218,20 +3447,20 @@
+   note: String
+   note: String
+   note: String
+-  note: String
+-  note: String
++  note: String ## added for CPub
+   numericDuration: Float!
+   numericDuration: Float!
+   object: Agent!
+   object: ID
+   object: ID!
+-  onhandEffect: String!
++  offersPages(limit: Int, before: [Cursor!], after: [Cursor!]): IntentsPage!
++  onhandEffect: String
+   onhandQuantity: Measure
++  | Organisation
++  | Organization
++  Organization
+   organization(id: ID): Organization
+-    organization: OrganizationCreateParams!
+-    organization: OrganizationUpdateParams!
+-  ): OrganizationResponse
+-  ): OrganizationResponse
++  organizationsPages(
+   organizations(start: ID, limit: Int): [Organization!]
+   outputOf: ID
+   outputOf: ID
+@@ -3242,13 +3471,25 @@
+   outputOf: Process
+   outputOf: Process
+   outputs(action: ID): [EconomicEvent!]
++  page_info: PageInfo
++  page_info: PageInfo
++  page_info: PageInfo
++  pageInfo: PageInfo!
++  pageInfo: PageInfo!
++  pageInfo: PageInfo!
++  pageInfo: PageInfo!
++  pageInfo: PageInfo!
++  pageInfo: PageInfo!
+   page: Int
+   pairsWith: String
+   @param proposed the (`Proposal`) to send to an involved agent
+   @param proposedTo the (`Agent`) to include in the proposal
+   @param publishedIn the (`Proposal`) to include the intent in
+   @param publishes the (`Intent`) to include as part of the proposal
++  peoplePages(limit: Int, before: [Cursor!], after: [Cursor!]): AgentsPage!
+   people(start: ID, limit: Int): [Person!]
++  | Person
++  Person
+   person(id: ID): Person
+   plan(id: ID): Plan
+   plannedWithin: ID
+@@ -3267,8 +3508,6 @@
+   (`Plan`) The process with its inputs and outputs is part of the plan.
+   previousProcesses: [Process!]
+   primaryAccountable: Agent
+-  primaryLocation: ID
+-  primaryLocation: ID
+   primaryLocation: ID
+   primaryLocation: ID
+   primaryLocation: SpatialThing
+@@ -3294,6 +3533,7 @@
+   processes(filter: agentProcessSearchParams): [Process!]
+   processes(filter: agentProcessSearchParams): [Process!]
+   processes(filter: planProcessSearchParams): [Process!]
++  processesPages(limit: Int, before: [Cursor!], after: [Cursor!]): ProcessPage!
+   processes(start: ID, limit: Int): [Process!]
+   process(id: ID): Process
+   process: Process
+@@ -3321,8 +3561,15 @@
+   productionDate: DateTime
+   productionDate: DateTime
+   productionDate: DateTime
++  ): [Proposal]
+   proposal(id: ID): Proposal
+   proposal: Proposal
++  proposalsFiltered(
++  ): ProposalsPage!
++  proposalsPages(
++  proposals: [Proposal!] ## added for CPub
++  proposals: [Proposal!] ## added for CPub
++  proposals: [Proposal!] ## added for CPub
+   proposals(start: ID, limit: Int): [Proposal!]
+   proposedIntent: ProposedIntent
+   ): ProposedIntentResponse
+@@ -3334,9 +3581,13 @@
+   provider: Agent
+   provider: Agent!
+   provider: Agent!
++  provider: Agent!
++    provider: [ID]
+   provider: ID
+   provider: ID
+   provider: ID
++  provider: ID
++  provider: ID!
+   provider: ID!
+   provider: ID!
+     providerId: ID
+@@ -3361,20 +3612,21 @@
+   receiver: Agent
+   receiver: Agent!
+   receiver: Agent!
++  receiver: Agent!
++    receiver: [ID]
++  receiver: ID
+   receiver: ID
+   receiver: ID
+   receiver: ID
+   receiver: ID!
+   receiver: ID!
++  receiver: ID!
+     receiverId: ID
+   recipeClauseOf: ID
+-  recipeClauseOf: ID
+-  recipeClauseOf: RecipeExchange
+   recipeExchange(id: ID): RecipeExchange
+   recipeExchange: RecipeExchange
+     recipeExchange: RecipeExchangeCreateParams
+     recipeExchange: RecipeExchangeUpdateParams
+-  (`RecipeExchange`) Relates a flow to its exchange agreement in a recipe.
+   (`RecipeExchange`) Relates a flow to its exchange agreement in a recipe.
+   ): RecipeExchangeResponse
+   ): RecipeExchangeResponse
+@@ -3416,24 +3668,29 @@
+   References a concept in a common taxonomy or other classification scheme for purposes of categorization.
+   References a concept in a common taxonomy or other classification scheme for purposes of categorization.
+   References a concept in a common taxonomy or other classification scheme for purposes of categorization.
+-  References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping.
+-  References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping.
+-  References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping.
+-  References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping.
+-  References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping.
+-  References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping.
+-  References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping.
+-  References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping.
+-  References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping.
+-  References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping.
+-  References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping.
+-  References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping.
+-  References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping.
+-  References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping.
+-  References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping.
+-  References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping.
+-  References a concept in a common taxonomy or other classification scheme for purposes of categorization or grouping.
+   References another economic event that implied this economic event, often based on a prior agreement.
++  References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
++  References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
++  References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
++  References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
++  References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
++  References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
++  References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
++  References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
++  References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
++  References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
++  References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
++  References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
++  References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
++  References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
++  References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
++  References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
++  References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
++  References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
++  References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
++  References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
++  References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
++  References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
+   References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
+   References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
+   References one or more concepts in a common taxonomy or other classification scheme for purposes of categorization or grouping.
+@@ -3465,7 +3722,6 @@
+   Registers a new organization (group agent) with the collaboration space
+   Relates a claim to a verb, such as consume, produce, work, improve, etc.
+   Relates a commitment to a verb, such as consume, produce, work, improve, etc.
+-  Relates a flow to its exchange agreement in a recipe.
+   Relates an economic event to a verb, such as consume, produce, work, improve, etc.
+   Relates an input flow to its process in a recipe.
+   Relates an intent to a verb, such as consume, produce, work, improve, etc.
+@@ -3599,7 +3855,6 @@
+   satisfies: Intent!
+   satisfies: [Satisfaction!]
+   satisfies: [Satisfaction!]
+-scalar DateTime
+ scalar URI
+   scenarioDefinition(id: ID): ScenarioDefinition
+   ): ScenarioDefinitionResponse
+@@ -3640,6 +3895,8 @@
+   spatialThing(id: ID): SpatialThing
+   ): SpatialThingResponse
+   ): SpatialThingResponse
++  ): SpatialThingsPage!
++  spatialThingsPages(
+   spatialThing: SpatialThing
+     spatialThing: SpatialThingCreateParams!
+     spatialThing: SpatialThingUpdateParams!
+@@ -3647,9 +3904,7 @@
+   (`SpatialThing`) The current place an economic resource is located.  Could be at any level of granularity, from a town to an address to a warehouse location.  Usually mappable.
+   (`SpatialThing`) The location at which this proposal is eligible.
+   (`SpatialThing`) The location at which this proposal is eligible.
+-  (`SpatialThing`) The main place an agent is located, often an address where activities occur and mail can be sent. This is usually a mappable geographic location.  It also could be a website address, as in the case of agents who have no physical location.
+-  (`SpatialThing`) The main place an agent is located, often an address where activities occur and mail can be sent. This is usually a mappable geographic location.  It also could be a website address, as in the case of agents who have no physical location.
+-  (`SpatialThing`) The main place an agent is located, often an address where activities occur and mail can be sent. This is usually a mappable geographic location.  It also could be a website address, as in the case of agents who have no physical location.
++  (`SpatialThing`)  The main place an agent is located, often an address where activities occur and mail can be sent. This is usually a mappable geographic location.  It also could be a website address, as in the case of agents who have no physical location.
+   (`SpatialThing`) The main place an agent is located, often an address where activities occur and mail can be sent. This is usually a mappable geographic location.  It also could be a website address, as in the case of agents who have no physical location.
+   (`SpatialThing`) The place where an commitment occurs.  Usually mappable.
+   (`SpatialThing`) The place where an commitment occurs.  Usually mappable.
+@@ -3669,6 +3924,7 @@
+   startDate: DateTime
+     startDate: String
+   state: Action
++    state: [ID]
+   state: String
+   state: String
+   subject: Agent!
+@@ -3681,6 +3937,29 @@
+   symbol: String
+   symbol: String!
+   symbol: String!
++  | Taggable
++    # tagIds: [ID]
++    tagIds: [ID]
++    tagIds: [ID]
++  tags: [AnyContext!] ## added for CPub
++  tags: [AnyContext] ## added for CPub
++  tags: [AnyContext] ## added for CPub
++  Tags/Categories in a taxonomy, linked to resourceClassifiedAs:
++  Tags/Categories in a taxonomy, linked to resourceClassifiedAs:
++  Tags/Categories in a taxonomy, linked to resourceClassifiedAs:
++  Tags/Categories in a taxonomy, linked to resourceClassifiedAs:
++  Tags/Categories in a taxonomy, linked to resourceClassifiedAs:
++  Tags/Categories in a taxonomy, linked to resourceClassifiedAs:
++  Tags/Categories in a taxonomy, linked to resourceClassifiedAs:
++  Tags/Categories in a taxonomy, linked to resourceClassifiedAs:
++  tags: [ID!] ## added for CPub
++  tags: [ID!] ## added for CPub
++  tags: [ID!] ## added for CPub
++  tags: [ID!] ## added for CPub
++  tags: [ID!] ## added for CPub
++  "TEMPORARY - get filtered but non-paginated list of intents"
++  "TEMPORARY - get filtered but non-paginated list of proposals"
++  "TEMPORARY - get filtered but non-paginated list of resources"
+   The accounting effect of an economic event on a resource, increment, decrement, no effect, or decrement resource and increment 'to' resource.
+   The action that should be included on the other direction of the process, for example accept with modify.
+   The agent currently with primary rights and responsibilites for the economic resource. It is the agent that is associated with the accountingQuantity of the economic resource.
+@@ -3702,7 +3981,7 @@
+   The amount and unit of the economic resource counted or inventoried.
+   The amount and unit of the economic resource counted or inventoried.
+   The amount and unit of the economic resource counted or inventoried.
+-  The amount and unit of the economic resource counted or inventoried.
++  The amount and unit of the economic resource counted or inventoried. This is the quantity that could be used to increment or decrement a resource, depending on the type of resource and resource effect of action.
+   The amount and unit of the economic resource counted or inventoried. This is the quantity that could be used to increment or decrement a resource, depending on the type of resource and resource effect of action.
+   The amount and unit of the economic resource counted or inventoried. This is the quantity that could be used to increment or decrement a resource, depending on the type of resource and resource effect of action.
+   The amount and unit of the economic resource counted or inventoried. This is the quantity that could be used to increment or decrement a resource, depending on the type of resource and resource effect of action.
+@@ -3762,7 +4041,6 @@
+   The date and time the proposal was created.
+   The date/time at which the economic event occurred. Can be used instead of beginning and end.
+   The date/time at which the economic event occurred. Can be used instead of beginning and end.
+-The `DateTime` scalar type represents a DateTime value as specified by
+   The default unit used for the resource itself.
+   The default unit used for use or work.
+   The definition or specification for a process.
+@@ -3770,9 +4048,11 @@
+   The duration of the scenario, often an accounting period.
+   The duration of the scenario, often an accounting period.
+   The economic agent from whom the actual economic event is initiated.
++  The economic agent from whom the claim is initiated.
+   The economic agent from whom the commitment is initiated.
+   The economic agent from whom the intent is initiated. This implies that the intent is an offer.
+   The economic agent whom the actual economic event is for.
++  The economic agent whom the claim is for.
+   The economic agent whom the commitment is for.
+   The economic agent whom the intent is for.  This implies that the intent is a request.
+   The economic event can be safely deleted, has no dependent information.
+@@ -3892,8 +4172,6 @@
+   The uri to an image relevant to the agent, such as a logo, avatar, photo, etc.
+   The uri to an image relevant to the agent, such as a logo, avatar, photo, etc.
+   The uri to an image relevant to the agent, such as a logo, avatar, photo, etc.
+-  The uri to an image relevant to the agent, such as a logo, avatar, photo, etc.
+-  The uri to an image relevant to the agent, such as a logo, avatar, photo, etc.
+   The uri to an image relevant to the entity, such as a photo, diagram, etc.
+   The uri to an image relevant to the entity, such as a photo, diagram, etc.
+   The uri to an image relevant to the entity, such as a photo, diagram, etc.
+@@ -3902,7 +4180,7 @@
+   The uri to an image relevant to the entity, such as a photo, diagram, etc.
+   The uri to an image relevant to the intent, such as a photo.
+   The uri to an image relevant to the intent, such as a photo.
+-  The uri to an image relevant to the intent, such as a photo.
++  The uri to an image relevant to the intent, such as a photo. // WIP FIXME adding content rather than uri
+   The uri to an image relevant to the resource, such as a photo, diagram, etc.
+   The uri to an image relevant to the resource, such as a photo, diagram, etc.
+   The uri to an image relevant to the resource, such as a photo, diagram, etc.
+@@ -3915,8 +4193,18 @@
+   This proposal contains unit based quantities, which can be multipied to create commitments; commonly seen in a price list or e-commerce.
+   This proposal contains unit based quantities, which can be multipied to create commitments; commonly seen in a price list or e-commerce.
+   This scenario refines another scenario, often as time moves closer or for more detail.
++  ## TODO:
+   toResourceInventoriedAs: EconomicResource
+   toResourceInventoriedAs: ID
++  totalCount: Int
++  totalCount: Int
++  totalCount: Int
++  totalCount: Int!
++  totalCount: Int!
++  totalCount: Int!
++  totalCount: Int!
++  totalCount: Int!
++  totalCount: Int!
+   trace: [EconomicEvent!]
+   trace: [EconomicEvent!]
+   trace: [ProductionFlowItem!]
+@@ -3936,6 +4224,7 @@
+ type AgentRelationshipResponse {
+ type AgentRelationshipRole {
+ type AgentRelationshipRoleResponse {
++type AgentsPage {
+ type Agreement {
+ type AgreementResponse {
+ type Appreciation {
+@@ -3946,15 +4235,22 @@
+ type CommitmentResponse {
+ type Duration {
+ type EconomicEvent {
++type EconomicEventPage {
+ type EconomicEventResponse {
+ type EconomicResource {
++type EconomicResourcePage {
+ type EconomicResourceResponse {
+ type Fulfillment {
+ type FulfillmentResponse {
++type GeolocationMutation {
++type GeolocationQuery {
+ type Intent {
+ type IntentResponse {
++type IntentsPage {
+ type Measure {
+-type Mutation {
++type MeasurementMutation {
++type MeasurementQuery {
++type MeasuresPage {
+ type Organization implements Agent {
+ type OrganizationResponse {
+ type Person implements Agent {
+@@ -3962,6 +4258,7 @@
+ type Plan {
+ type PlanResponse {
+ type Process {
++type ProcessPage {
+ type ProcessResponse {
+ type ProcessSpecification {
+ type ProcessSpecificationResponse {
+@@ -3969,11 +4266,11 @@
+ type ProductBatchResponse {
+ type Proposal {
+ type ProposalResponse {
++type ProposalsPage {
+ type ProposedIntent {
+ type ProposedIntentResponse {
+ type ProposedTo {
+ type ProposedToResponse {
+-type Query {
+ type RecipeExchange {
+ type RecipeExchangeResponse {
+ type RecipeFlow {
+@@ -3994,9 +4291,13 @@
+ type SettlementResponse {
+ type SpatialThing {
+ type SpatialThingResponse {
++type SpatialThingsPage {
+ type Unit {
+ type UnitResponse {
+-union AccountingScope = Person | Organization
++type UnitsPage {
++type ValueFlowsMutation {
++type ValueFlowsQuery {
++union AccountingScope =
+ union EventOrCommitment = EconomicEvent | Commitment
+ union ProductionFlowItem = Process | EconomicResource
+   (`Unit`) A unit of measure.
+@@ -4012,6 +4313,7 @@
+   unitOfResource: ID
+   unitOfResource: ID
+   unitOfResource: Unit
++  unitsPages(limit: Int, before: [Cursor], after: [Cursor]): UnitsPage!
+   units(start: ID, limit: Int): [Unit!]
+   (`Unit`) The default unit used for the resource itself.
+   (`Unit`) The default unit used for the resource itself.
+@@ -4036,7 +4338,7 @@
+   updateEconomicResource(
+   updateFulfillment(fulfillment: FulfillmentUpdateParams!): FulfillmentResponse
+   updateIntent(intent: IntentUpdateParams): IntentResponse
+-  updateOrganization(
++  updateOrganization(organization: AgentUpdateParams!): OrganizationResponse
+   Update organization profile details
+   updatePerson(person: AgentUpdateParams!): PersonResponse
+   updatePlan(plan: PlanUpdateParams!): PlanResponse
+@@ -4055,11 +4357,13 @@
+   updateScenario(plan: ScenarioUpdateParams!): ScenarioResponse
+   updateSettlement(s0ettlement: SettlementUpdateParams!): SettlementResponse
+   updateSpatialThing(
+-  updateUnit(unit: UnitUpdateParams): UnitResponse
++  updateUnit(unit: UnitUpdateParams!): UnitResponse
+ Used instead of a classification when more information is needed, particularly for recipes.
+   Used when a stock economic resource contains items also defined as economic resources.
+   Used when a stock economic resource contains units also defined as economic resources.
++    User
+   week
+   When a specific `EconomicResource` is known which can service the `Intent`, this defines that resource.
++  Which Agent(s) (if any were specified) was this proposed to?
+   workingAgents: [Agent!]
+   year
+

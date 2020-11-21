@@ -2,6 +2,9 @@
 
 GraphQL reference implementation of the [ValueFlows](http://valueflo.ws/) grammar.
 
+Note: This fork contains static copies (as of 21 Nov 2020) of the VF-GraphQL spec and the API as implemented in CPub/Bonfire.
+You can run `./dif lib/ALL_VF_SDL.gql lib/ALL_VF_CPUB.gql -sort` to see differences while ignoring line order (a copy of which is at `lib/ALL_VF_CPUB.diff`) 
+
 <!-- MarkdownTOC -->
 
 - [API](#api)

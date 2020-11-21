@@ -1130,6 +1130,7 @@ type SpatialThing {
   A textual description or comment.
   """
   note: String
+
   agents: [Agent!]
   economicResources: [EconomicResource!]
   economicEvents: [EconomicEvent!]
@@ -1277,6 +1278,7 @@ type ResourceSpecification {
   The default unit used for use or work.
   """
   defaultUnitOfEffort: Unit
+  
   conformingResources: [EconomicResource!]
 }
 
