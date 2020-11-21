@@ -4,7 +4,6 @@ node_modules/
 lib/build/
 lib/json-schema.json
 lib/schema-manifest.js
-lib/ALL_VF_SDL.js
 lib/index.d.ts
 lib/index.flow.js
 lib/LICENSE
