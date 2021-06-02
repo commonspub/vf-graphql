@@ -24,19 +24,6 @@ scalar URI
 
 
 """
-Query parameters for searching/filtering any kind of object
-"""
-input GenericSearchParams {
-  searchString: String
-  agent: [ID]
-  provider: [ID]
-  receiver: [ID]
-  inScopeOf: [ID]
-  classifiedAs: [URI!]
-  tagIds: [ID]
-}
-
-"""
 Sort parameters for ordering a list of any kind of object
 """
 input GenericSortParams {
@@ -49,6 +36,17 @@ input GenericSortParams {
   receiver: Sort
   inScopeOf: Sort
   classifiedAs: Sort
+}
+
+"""
+Query parameters for searching/filtering any kind of object
+"""
+input GenericSearchParams {
+  searchString: String
+  agent: [ID]
+  inScopeOf: [ID]
+  classifiedAs: [URI!]
+  tags: [ID]
 }
 
 """
@@ -83,7 +81,7 @@ input IntentSearchParams {
   provider: [ID]
   receiver: [ID]
   inScopeOf: [ID]
-  tagIds: [ID]
+  tags: [ID]
   atLocation: [ID]
   geolocation: GeolocationFilters
 }
@@ -127,7 +125,7 @@ input ResourceSearchParams {
 
   ## added for Bonfire
   inScopeOf: [ID]
-  tagIds: [ID]
+  tags: [ID]
   currentLocation: [ID]
   geolocation: GeolocationFilters
   agent: [ID]
@@ -147,7 +145,7 @@ input CommitmentSearchParams {
 
 input ResourceSpecificationSearchParams {
   inScopeOf: [ID]
-  tagIds: [ID]
+  tags: [ID]
 }
     
 
@@ -5176,7 +5174,7 @@ type SpatialThingsPage {
 }
 
 type GeolocationQuery {
-  
+
   spatialThing(id: ID): SpatialThing
 
   spatialThings(
